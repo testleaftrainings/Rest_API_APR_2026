@@ -1,0 +1,17 @@
+[
+	{
+		"ShortDescription": "RESTAPISESSIONAPR2026 1",
+		"Description": "Create ticket for the hardware related issues",
+		"Category": "hardware"
+	},
+	{
+		"ShortDescription": "RESTAPISESSIONAPR2026 2",
+		"Description": "Create ticket for the software related issues",
+		"Category": "software"
+	},
+	{
+		"ShortDescription": "RESTAPISESSIONAPR2026 3",
+		"Description": "Create ticket for the database related issues",
+		"Category": "database"
+	}
+]
