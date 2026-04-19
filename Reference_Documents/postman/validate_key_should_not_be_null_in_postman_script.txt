@@ -1,0 +1,28 @@
+validate key should not be null in postman script
+
+To validate that a specific key in your JSON response is not null in a Postman test script, you can use the Chai assertion library methods available within the pm.test() function. 
+
+Add the following script to the Tests tab of your request: 
+
+pm.test("Key value should not be null", function () {
+    // Parse the response body as JSON
+    var jsonData = pm.response.json();
+    
+    // Replace 'your_key_name' with the actual key you want to validate
+    var keyValue = jsonData.your_key_name;
+
+    // Assertion using Chai's expect BDD style
+    pm.expect(keyValue).to.not.be.null; // Checks that the value is not 'null'
+
+    // To also check that the key exists and is not undefined (a common source of errors)
+    pm.expect(jsonData, 'Key "your_key_name" should exist').to.have.property('your_key_name');
+    pm.expect(keyValue, 'Key "your_key_name" should not be undefined').to.not.be.undefined;
+});
+
+Key Assertions Explained
+
+-> pm.response.json(): This line parses the API response body into a JavaScript object for easy access.
+
+-> pm.expect(keyValue).to.not.be.null;: This is the core assertion. It checks that the variable keyValue is not strictly equal to the null data type.
+
+-> .to.not.be.undefined;: In JavaScript, accessing a non-existent key in an object returns undefined, not null. Using this ensures the key is actually present in the response.

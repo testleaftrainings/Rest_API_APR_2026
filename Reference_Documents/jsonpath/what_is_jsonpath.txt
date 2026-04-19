@@ -1,0 +1,60 @@
+What is JSONPath?
+
+JSONPath is a query language used to extract or select specific data and navigate through elements within a JSON document. It is conceptually similar to XPath, which is used for XML documents.
+
+JSONPath is widely used across many programming languages and tools, to help developers / api test automation engineer interact with JSON data efficiently without writing complex code.
+
+Key Syntax Elements:
+
+JSONPath expressions always start with a dollar sign ($), which represents the root of the JSON structure.
+
+$ - The root object or array.	
+ex:) $ selects the entire JSON object.
+
+.property - Selects a specific property within an object.	
+ex:) $.store.book selects the value of the "book" property within the "store" object.
+
+['property'] - Selects a property using bracket notation (useful for properties with special characters or spaces).
+ex:) $['store']['book'] is equivalent to $.store.book.
+
+[n] - Selects the n-th element from an array (indexes are 0-based)
+ex:) $.store.book[0] selects the first book in the "book" array.
+
+* - Wildcard: selects all elements in an object or array.
+ex:) $.store.book[*].author selects all authors of all books.
+
+..	- Deep scan (recursive descent): searches for the specified property name at any nesting level.
+ex:) $..author selects all author properties anywhere in the document.
+
+[start:end] - Array slice operator: selects a range of elements from an array.
+ex:) $..book[1:3] selects the first two books.
+
+[:n] - The first n elements of the array. The result is a list of elements.
+ex:) $..book[:2] selects the first two books.
+
+[-n:] - The last n elements of the array. The result is a list of elements.
+ex:) $..book[-2:] selects the last two books.
+
+[start:end:step] - Array slice operator: selects a range of elements from an array, the 'step' value is an optional integer that determines the increment used to move from the 'start' position to the 'end' position within the array
+
+How the 'step' value works:
+
+Syntax: The array slice syntax is [start:end:step], where all three components are optional integer literals separated by colons.
+
+Default Value: If omitted, the default 'step' is 1.
+
+Positive Step: When 'step' is positive, elements are selected in forward order, starting from the 'start' index and incrementing by the step value, up to but not including the 'end' index.
+
+Negative Step: When 'step' is negative, elements are selected in reverse order. The iteration moves backwards through the array elements. An expression like [::-1] selects all elements of an array in reverse order.
+
+Zero Step: A 'step' value of 0 results in no elements being selected, returning an empty array. (Note: some implementations might raise an error instead). 
+
+ex:) $..book[1:10:2] Starts at index 1, goes up to (not including) 10, selecting every second element.
+
+[?(expression)] - Filter expression: selects all elements that match a specified logical condition.
+ex:) $..book[?(@.price < 10)] selects books cheaper than 10.
+
+@ - Used within filter expressions to refer to the current node being processed.
+ex:) $..book[?(@.price < 10)]
+
+You can use online evaluators, such as jsonpath.com, to test JSONPath expressions against sample JSON data. 

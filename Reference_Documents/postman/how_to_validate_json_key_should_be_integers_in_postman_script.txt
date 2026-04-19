@@ -1,0 +1,40 @@
+how to validate json key should be integers in postman script
+
+To validate in a Postman script that a JSON key's value should be an integer, you can use JavaScript's built-in Number.isInteger() function within the "Tests" tab of your request 
+
+Here is how you can set up the script:
+
+1. Open the request you want to test in Postman.
+2. Go to the Tests tab.
+3. Add the following JavaScript code to check specific keys in your response body. 
+
+Example Script
+
+This script retrieves the JSON response, accesses a specific key (e.g., userId), and asserts that its value is an integer. 
+
+// Parse the response body as JSON
+const responseJson = pm.response.json();
+
+// Define the keys you want to validate as integers
+const keysToValidate = ['userId', 'postId', 'some_id_field'];
+
+// Iterate over the keys and perform the validation
+keysToValidate.forEach(key => {
+    pm.test(`"${key}" key should have an integer value`, function () {
+        // Check if the key exists and if its value is an integer
+        pm.expect(responseJson).to.have.property(key, 'Key "${key}" is missing from the response.');
+        pm.expect(Number.isInteger(responseJson[key]), `Value for "${key}" is not an integer.`).to.be.true;
+    });
+});
+
+Explanation
+
+-> pm.response.json(): Parses the incoming JSON response body so you can work with it as a JavaScript object 
+
+-> keysToValidate: An array holds the names of all the keys you need to check.
+
+-> Number.isInteger(responseJson[key]): This is the core of the validation. It returns true only if the value associated with the specified key is an actual integer
+
+-> pm.expect(...).to.be.true: This is a Chai assertion (the assertion library used by Postman's test scripts) that ensures the result of Number.isInteger() is true, causing the test to fail if it is not. 
+
+When you run your request, the tests will appear in the "Test Results" tab, indicating whether each key passed the integer validation. 

@@ -1,0 +1,342 @@
+{
+  "info": {
+    "_postman_id": "a3920b16-cbcf-426c-ba2a-dca04d738138",
+    "name": "week2.day2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2257080"
+  },
+  "item": [
+    {
+      "name": "create_new_request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Status code name has Created\", function () {",
+              "    pm.response.to.have.status(\"Created\");",
+              "});",
+              "",
+              "pm.test(\"Response format should be in JSON\", function () {",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.contains(\"json\");",
+              "    var jsonData = pm.response.json();",
+              "    pm.collectionVariables.set(\"sysId\", jsonData.result.sys_id);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "admin",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{protocol}}://{{baseUri}}/{{basePath}}/:table",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{baseUri}}"
+          ],
+          "path": [
+            "{{basePath}}",
+            ":table"
+          ],
+          "variable": [
+            {
+              "key": "table",
+              "value": "{{tableName}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get_a_record",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Status code name has OK\", function () {",
+              "    pm.response.to.have.status(\"OK\");",
+              "});",
+              "",
+              "pm.test(\"Response format should be in JSON\", function () {",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.contains(\"json\");",
+              "});",
+              "",
+              "pm.test(\"Validate sys_id key value\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result.sys_id).to.eql(pm.collectionVariables.get(\"sysId\"));",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{protocol}}://{{baseUri}}/{{basePath}}/:table/:sys_id",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{baseUri}}"
+          ],
+          "path": [
+            "{{basePath}}",
+            ":table",
+            ":sys_id"
+          ],
+          "variable": [
+            {
+              "key": "table",
+              "value": "{{tableName}}"
+            },
+            {
+              "key": "sys_id",
+              "value": "{{sysId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update_existing_reocrd",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Status code name has OK\", function () {",
+              "    pm.response.to.have.status(\"OK\");",
+              "});",
+              "",
+              "pm.test(\"Response format should be in JSON\", function () {",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.contains(\"json\");",
+              "});",
+              "",
+              "pm.test(\"Validate short_description key value\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result.short_description).to.eql(\"RESTAPISESSIONAPR2026\");",
+              "});",
+              "",
+              "pm.test(\"Validate category key value\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.result.category).to.eql(\"database\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"short_description\": \"RESTAPISESSIONAPR2026\",\n    \"category\": \"database\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{protocol}}://{{baseUri}}/{{basePath}}/:table/:sys_id",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{baseUri}}"
+          ],
+          "path": [
+            "{{basePath}}",
+            ":table",
+            ":sys_id"
+          ],
+          "variable": [
+            {
+              "key": "table",
+              "value": "{{tableName}}"
+            },
+            {
+              "key": "sys_id",
+              "value": "{{sysId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_existing_record",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});",
+              "",
+              "pm.test(\"Status code name has No Content\", function () {",
+              "    pm.response.to.have.status(\"No Content\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{protocol}}://{{baseUri}}/{{basePath}}/:table/:sys_id",
+          "protocol": "{{protocol}}",
+          "host": [
+            "{{baseUri}}"
+          ],
+          "path": [
+            "{{basePath}}",
+            ":table",
+            ":sys_id"
+          ],
+          "variable": [
+            {
+              "key": "table",
+              "value": "{{tableName}}"
+            },
+            {
+              "key": "sys_id",
+              "value": "{{sysId}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "basePath",
+      "value": "api/now/table"
+    },
+    {
+      "key": "tableName",
+      "value": "incident"
+    },
+    {
+      "key": "sysId",
+      "value": ""
+    }
+  ]
+}

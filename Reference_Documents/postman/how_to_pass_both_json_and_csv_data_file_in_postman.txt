@@ -1,0 +1,49 @@
+how to pass both json and csv data file in postman collection using newman
+
+It is not possible to pass both a JSON and a CSV data file simultaneously in a single Newman command. The Newman CLI's --iteration-data (or -d) option accepts only a single file (either JSON or CSV) per run, which is then used for all iterations of that specific execution. 
+
+To use both files, you need to run the Newman command multiple times, once for each data file or for a specific folder within the collection that uses that data. 
+
+Method 1: Multiple Newman Commands
+
+The most direct approach is to execute separate Newman commands for each data file. This is suitable if different parts of your collection (e.g., specific folders) require different data, or if you want to run the entire collection with different data sets sequentially.
+
+# Run the collection with the JSON data file
+newman run my_collection.json -d data.json
+
+# Run the same collection (or a different one) with the CSV data file
+newman run my_collection.json -d data.csv
+
+You can also specify specific folders to run with each data file: 
+
+newman run my_collection.json --folder "FolderA" -d dataA.json
+newman run my_collection.json --folder "FolderB" -d dataB.csv
+
+Method 2: Use a Wrapper Script 
+
+For a more automated solution, you can create a simple shell or batch script (e.g., PowerShell, Python) to iterate over your data files and run the Newman command for each one in sequence. 
+
+Example using a shell script (Linux/macOS):
+
+#!/bin/bash
+
+# Define the collection file
+COLLECTION_FILE="my_collection.json"
+
+# List of data files to run
+DATA_FILES=("data.json" "data.csv")
+
+for DATA_FILE in "${DATA_FILES[@]}"; do
+    echo "--- Running with data file: $DATA_FILE ---"
+    newman run "$COLLECTION_FILE" -d "$DATA_FILE"
+    if [ $? -ne 0 ]; then
+        echo "Newman run with $DATA_FILE failed."
+        exit 1
+    fi
+done
+
+echo "--- All runs completed successfully ---"
+
+Method 3: Consolidate Data
+
+If feasible, you could merge the relevant data from both the JSON and CSV files into a single, comprehensive JSON array or CSV file. Postman/Newman would then use this single file for all iterations. This requires careful formatting to ensure all required variables are present for each test case. 

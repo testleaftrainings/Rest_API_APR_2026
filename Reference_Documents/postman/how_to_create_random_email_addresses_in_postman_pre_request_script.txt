@@ -1,0 +1,50 @@
+how to create random email addresses in postman pre request script
+
+To create a random email address in a Postman pre-request script, you can generate a random string and append an email domain to it using built-in Postman dynamic variables or JavaScript functions like Math.random()
+
+Here are two common methods:
+
+Method 1: Using Postman's built-in dynamic variables
+
+Postman provides dynamic variables like $randomInt to help generate unique data easily. 
+
+In your Pre-request Script tab:
+
+// Generate a random 4-digit number
+const randomNum = Math.floor(Math.random() * 10000); 
+
+// Construct the email address
+const randomEmail = "user" + randomNum + "@example.com";
+
+// Set the email address as an environment variable
+pm.environment.set("dynamic_email", randomEmail);
+
+You can then use the environment variable {{dynamic_email}} in your request body or URL.
+
+Method 2: Using the postman object and UUID (more unique)
+
+For a highly unique identifier that avoids potential collisions, you can use Postman's built-in pm.variables.replaceIn() function with the $guid (UUID) dynamic variable. This creates a long, unique string. 
+
+In your Pre-request Script tab:
+
+// Generate a UUID (Universally Unique Identifier)
+const uuid = pm.variables.replaceIn("{{$guid}}");
+
+// Construct the email address
+const randomEmail = "user_" + uuid + "@example.com";
+
+// Set the email address as an environment variable
+pm.environment.set("dynamic_email", randomEmail);
+
+How to use the generated email in your request
+
+After adding one of the above scripts to your request's Pre-request Script tab, you can use the variable {{dynamic_email}} in other parts of your request, such as in the Body (for a POST request): 
+
+{
+  "email": "{{dynamic_email}}",
+  "username": "testuser"
+}
+
+This will automatically substitute the placeholder with a newly generated email address every time you send the request. 
+
+For further information on working with data, see the official Postman documentation on working with data and the Postman Learning Center. 

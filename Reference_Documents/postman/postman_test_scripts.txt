@@ -1,0 +1,35 @@
+Postman test script:
+
+1.) To validate the response status code
+pm.test("Status code is 201", function () {
+    pm.response.to.have.status(201);
+});
+
+2.) To validate the response status name or message
+pm.test("Status code name has Created", function () {
+    pm.response.to.have.status("Created");
+});
+
+3.) To validate the response format is JSON or not
+pm.test("Response format should be application/json", function () {
+    let responseFormat = pm.response.headers.get("Content-Type");
+    pm.expect(responseFormat).to.include("application/json");
+});
+
+4.) To validate the response time which less than the given SLA in ms
+pm.test("Response time is less than 5000ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(5000);
+});
+
+5.) To validate the JSON response body value
+pm.test("Validate short_description key value", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.result.short_description).to.eql('RESTAPISEP2025');
+});
+
+6.) To validate the JSON response property (or) field name
+pm.test("Validate the JSON response have sys_id property", function () {
+    var jsonData = pm.response.json();
+    var jsonpath = jsonData.result;
+    pm.expect(jsonpath).to.have.property('sys_id');
+});
