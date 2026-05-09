@@ -1,8 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.rest.api.apr.2026.session</groupId>
-  <artifactId>rest_api_apr_2026_session</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.rest.api.apr.2026.session</groupId>
+	<artifactId>rest_api_apr_2026_session</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<properties>
+		<allure.version>2.24.0</allure.version>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-bom</artifactId>
+				<version>${allure.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -22,6 +36,26 @@
 			<version>2.14.0</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>7.34.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>7.34.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-testng</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-rest-assured</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -30,7 +64,7 @@
 				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
 				<version>1.3.3</version>
 				<configuration>
-				    <sourceType>json</sourceType>
+					<sourceType>json</sourceType>
 					<sourceDirectory>${basedir}/src/main/resources/request_body</sourceDirectory>
 					<targetPackage>week3.day2.pojos</targetPackage>
 					<outputDirectory>${basedir}/src/main/java</outputDirectory>

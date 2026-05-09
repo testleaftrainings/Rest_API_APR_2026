@@ -1,0 +1,33 @@
+What is AAA framework? Could you explain the framework with RestAssured Java
+
+The AAA (Arrange, Act, Assert) testing framework—often referred to as a pattern or methodology—is a widely adopted industry standard for structuring unit tests and automated tests. It promotes code quality by dividing a test method into three distinct, logical sections, ensuring tests are readable, maintainable, and well-structured.
+
+The AAA (Arrange-Act-Assert) framework is a pattern for structuring tests clearly and consistently. 
+
+It divides each test into three distinct phases:
+
+Arrange - Sets up the test preconditions, initializes objects, creates mocks, 
+          and prepares data required for the test execution.
+
+Act     - Invokes the actual method, function, or API being tested.
+
+Assert  - Verifies that the action performed in the "Act" phase behaves as  
+          expected.
+
+Benefits of the AAA Pattern: -
+
+Improved Readability: Tests are easy to understand because they follow a standard, consistent structure.
+
+Separation of Concerns: Each part of the test has a single, specific responsibility, which reduces complexity.
+
+Easy Debugging: Because tests are narrow and structured, a failure clearly points to where the logic broke.
+
+Maintained Structure: It forces developers to separate setup from execution, which makes tests less likely to be flaky.
+
+How AAA Maps to RestAssured's DSL?
+
+RestAssured's natural given / when / then DSL maps beautifully to the AAA pattern:
+
+Arrange  →  given()   — headers, auth, body, base URL
+Act      →  when()    — get(), post(), put(), delete()
+Assert   →  then()    — statusCode(), body(), header()
