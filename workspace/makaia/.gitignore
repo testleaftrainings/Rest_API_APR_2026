@@ -1,0 +1,14 @@
+.classpath
+.project
+.settings/
+target/
+reports/
+test-output/
+src/test/resources/secret.properties
+images/
+allure-report/
+allure-results/
+snapshots/
+node_modules/
+package-lock.json
+cucumber-report/

@@ -1,0 +1,55 @@
+
+What is Cucumber?
+
+Cucumber is a tool that facilitates BDD approach
+
+BDD - Behaviour Driven Development
+
+Helps remove the commucation gaps between the technical and the
+business team
+
+Gherkin Langauge
+
+1. Discovery (Sprint Refinement) --> Three Amigos Meeting (RAW Ideas)
+2. Documentation --> Gherkin Keyword (Cucumber)
+3. Automation --> Create script to validate the application should meet acceptacnce criteria or not
+
+Cucumber - Java/python/javascript/ruby
+Specflow - C# (or) .net
+JBehave - Java
+
+Feature
+Scenario
+
+Scenario Outline
+Background
+
+Given
+When
+Then
+
+And
+But
+
+
+Given I need to launch chrome browser in my pc
+When I load the "www.google.com" in the chrome browser
+Then I need to valdiate the google title
+
+Given user enters invalid username and invalid password
+When they click on the login button
+But user should see the inline error message in the particular field
+
+Given Type a number 10
+And click "+" sign in the calculator
+And Type next number 20
+When perform addition operation (=)
+And
+Then the result of addition operation should match with expected value
+And
+
+Package: (src/test/java)
+
+features --> Contains the .feature files
+step.defs --> Contains Step defs or the rest assured script
+runner --> TestNG runner class to run the cucumber feature

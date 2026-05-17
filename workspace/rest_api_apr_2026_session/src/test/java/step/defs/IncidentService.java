@@ -1,7 +1,11 @@
 package step.defs;
 
+import java.util.List;
+import java.util.Map;
+
 import org.hamcrest.Matchers;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -11,6 +15,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import week3.day2.CreateIncident;
 
 public class IncidentService {
 	
@@ -18,6 +23,8 @@ public class IncidentService {
 			                                                       .filter(new RequestLoggingFilter())
 			                                                       .filter(new ResponseLoggingFilter());
 	private Response response;
+	private CreateIncident createIncident = new CreateIncident();
+	
 
 	@Given("set baseuri as {string}")
 	public void set_baseuri_as(String baseUri) {
@@ -48,6 +55,21 @@ public class IncidentService {
 	public void header_key_as_and_value_as(String key, String value) {
 		requestSpecification.header(key, value);	    
 	}
+	
+	@Given("set value of the shortDescription key as {string}")
+	public void set_value_of_the_short_description_key_as(String shortDescription) {
+	    createIncident.setShort_description(shortDescription);
+	}
+	
+	@Given("set value of the description key as {string}")
+	public void set_value_of_the_description_key_as(String description) {
+	   createIncident.setDescription(description);
+	}
+	
+	@When("hit post metho with url {string}")
+	public void hit_post_metho_with_url(String endPoint) {
+	    response = requestSpecification.body(createIncident).post(endPoint);
+	}
 
 	@When("hit get method with url {string}")
 	public void hit_get_method_with_url(String endPoint) {
@@ -74,6 +96,16 @@ public class IncidentService {
 		}
 		
 		//response.then().assertThat().contentType(Matchers.containsString(responseFormate.toLowerCase()));
+	}
+	
+	@Then("response validation")
+	public void response_validation(DataTable dataTable) {
+	    List<Map<String, String>> rows = dataTable.asMaps();
+	    for (Map<String, String> row : rows) {
+			response.then().assertThat().statusCode(Integer.parseInt(row.get("statusCode")));
+			response.then().assertThat().statusLine(Matchers.containsString(row.get("statusMessage")));
+			response.then().assertThat().contentType(Matchers.containsString(row.get("responseFormate").toLowerCase()));
+		}
 	}
 
 }

@@ -1,0 +1,12 @@
+[
+	{
+		"shortDescription": "hardware request",
+		"description": "Create new record for hardware",
+		"category": "hardware"
+	},
+	{
+		"shortDescription": "software request",
+		"description": "Create new record for software",
+		"category": "software"
+	}
+]
